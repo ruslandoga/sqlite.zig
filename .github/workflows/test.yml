@@ -10,14 +10,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: |
+
+      - id: zig
+        run: |
           sudo snap install zig --classic --edge
+          echo "::set-output name=version::$(zig version)"
           zig version
 
       - uses: actions/cache@v3
         with:
           path: zig-cache
-          key: zig-cache-v0
+          key: zig-cache-${{ steps.zig.outputs.version }}
           restore-keys: zig-cache-
 
       - run: zig build test
