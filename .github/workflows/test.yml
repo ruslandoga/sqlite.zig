@@ -3,16 +3,21 @@ name: test
 on:
   pull_request:
   push:
-    - master
+    branches: [master]
 
 jobs:
   zig:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Install dependencies
-        run: |
+      - uses: actions/checkout@v4
+      - run: |
           sudo snap install zig --classic --edge
           zig version
-      - name: Module test
-        run: zig build test
+
+      # - uses: actions/cache@v3
+      #   with:
+      #     path: zig-cache
+      #     key: zig-cache-
+      #     restore-keys: zig-cache-
+
+      - run: zig build test
