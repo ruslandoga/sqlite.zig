@@ -14,10 +14,10 @@ jobs:
           sudo snap install zig --classic --edge
           zig version
 
-      # - uses: actions/cache@v3
-      #   with:
-      #     path: zig-cache
-      #     key: zig-cache-
-      #     restore-keys: zig-cache-
+      - uses: actions/cache@v3
+        with:
+          path: zig-cache
+          key: zig-cache-v0
+          restore-keys: zig-cache-
 
       - run: zig build test
